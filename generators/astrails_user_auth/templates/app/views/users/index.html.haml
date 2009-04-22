@@ -1,0 +1,12 @@
+%h1 Listing users
+
+%table
+  %tr
+    %th Name
+    %th Email
+    %th Admin?
+  != render :partial => @users
+
+%br/
+
+!=link_to 'New user', new_object_url
