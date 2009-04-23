@@ -1,6 +1,6 @@
 class AuthUpdateUsers < ActiveRecord::Migration
   def self.up
-<% 
+<%
       existing_columns = ActiveRecord::Base.connection.columns(:users).collect { |each| each.name }
       columns = [
         [:name,               "t.string   :name"],
@@ -17,14 +17,14 @@ class AuthUpdateUsers < ActiveRecord::Migration
         [:last_login_ip,      "t.string   :last_login_ip, :limit => 15"],
         [:is_admin,           "t.boolean  :is_admin"],
         [:pending,            "t.boolean  :pending"],
-      ].delete_if {|c| existing_columns.include?(c.first.to_s)} 
+      ].delete_if {|c| existing_columns.include?(c.first.to_s)}
 -%>
     change_table(:users) do |t|
 <% columns.each do |c| -%>
       <%= c.last %>
 <% end -%>
     end
-    
+
 <%
     existing_indexes = ActiveRecord::Base.connection.indexes(:users)
     index_names = existing_indexes.collect { |each| each.name }
@@ -39,7 +39,7 @@ class AuthUpdateUsers < ActiveRecord::Migration
     <%= each.last %>
 <% end -%>
   end
-  
+
   def self.down
     change_table(:users) do |t|
 <% unless columns.empty? -%>
