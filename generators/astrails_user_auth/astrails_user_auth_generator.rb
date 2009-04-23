@@ -20,9 +20,9 @@ class AstrailsUserAuthGenerator < Rails::Generator::Base
       # models
       m.directory File.join("app", "models")
       m.insert_or_create("app/models/user.rb", <<-RUBY)
-        acts_as_authentic
-        include Astrails::Auth::Model
-      RUBY
+  acts_as_authentic
+  include Astrails::Auth::Model
+RUBY
 
       # views
       # copy all files in the templates app/views directory
@@ -33,7 +33,7 @@ class AstrailsUserAuthGenerator < Rails::Generator::Base
       end
 
       # migration
-      # m.migration_template "migrations/#{migration_name}.rb", 'db/migrate', :migration_file_name => "auth_#{migration_name}"
+      m.migration_template "migrations/#{migration_name}.rb", 'db/migrate', :migration_file_name => "auth_#{migration_name}"
 
       # specs
       m.directory File.join("spec", "controllers")
