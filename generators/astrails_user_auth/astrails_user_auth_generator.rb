@@ -28,7 +28,7 @@ class AstrailsUserAuthGenerator < Rails::Generator::Base
       # copy all files in the templates app/views directory
       Dir[m.target.source_root+"/app/views/**/*.*"].map{|s| s[m.target.source_root.length+1..-1]}.each do |file|
         dir = File.dirname(file)
-        m.directory(file) unless File.directory?(dir)
+        m.directory(dir) unless File.directory?(dir)
         m.file file, file
       end
 
