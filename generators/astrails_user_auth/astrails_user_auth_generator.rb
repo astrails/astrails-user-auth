@@ -36,16 +36,11 @@ RUBY
       m.migration_template "migrations/#{migration_name}.rb", 'db/migrate', :migration_file_name => "auth_#{migration_name}"
 
       # specs
-      m.directory File.join("spec", "controllers")
-      %w(
-         password_resets_routing_spec.rb
-         users_controller_spec.rb
-         password_resets_controller_spec.rb
-         user_session_controller_spec.rb
-         users_routing_spec.rb
-        ).each do |f|
-        f = "spec/controllers/#{f}"
-        m.insert_or_create(f, "include Astrails::Auth::Specs::#{f.split('.').first.camelize}")
+      Dir[m.target.source_root+"/spec/**/*.*"].each do |file|
+        incl = File.read(file).grep(/include/).first.chomp
+        file = file[m.target.source_root.length+1..-1]
+        m.directory File.dirname(file)
+        m.insert_or_create(file, incl)
       end
     end
   end
