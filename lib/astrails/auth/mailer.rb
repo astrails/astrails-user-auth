@@ -1,9 +1,9 @@
 module Astrails
   module Auth
     class Mailer < ActionMailer::Base
-      domain = default_url_options[:host] = GlobalPreference.get(:domain) 
 
       def password_reset_instructions(user)
+        domain = default_url_options[:host] = GlobalPreference.get(:domain)
         subject       "Password Reset Instructions"
         from          "Password Reset <noreply@#{domain}>"
         recipients    user.email
