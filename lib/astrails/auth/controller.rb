@@ -1,6 +1,12 @@
 module Astrails
   module Auth
     module Controller
+      def self.included(base)
+        base.class_eval do
+          helper_method :current_user
+          helper_method :current_user_session
+        end
+      end
       def current_user_session
         defined?(@current_user_session) ? @current_user_session : @current_user_session = UserSession.find
       end
