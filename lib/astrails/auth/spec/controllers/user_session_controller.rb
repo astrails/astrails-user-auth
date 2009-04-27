@@ -11,6 +11,10 @@ module Astrails
                 it_should_render_template "new"
                 it_should_assign :user_session
               end
+
+              describe_action :destroy do
+                it "should have test"
+              end
             end
           end
         end
