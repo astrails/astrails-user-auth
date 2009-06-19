@@ -1,8 +1,16 @@
 class UserSessionController < ResourceController::Singleton
+  unloadable
   actions :new, :create, :destroy
+  layout "guest"
 
-  create.wants.html {redirect_to "/"}
-  destroy.wants.html {redirect_to login_path}
+  create do
+    flash nil
+    wants.html {redirect_to home_path}
+  end
+  destroy do
+    flash nil
+    wants.html {redirect_to login_path}
+  end
 
   private
   def object

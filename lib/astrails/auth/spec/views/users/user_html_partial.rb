@@ -16,7 +16,6 @@ module Astrails
                 end
 
                 it_should_link_to_show :user
-                it_should_link_to_edit :user
                 it_should_link_to_delete :user
               end
             end

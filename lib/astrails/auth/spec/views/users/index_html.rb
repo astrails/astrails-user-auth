@@ -6,18 +6,19 @@ module Astrails
           module IndexHtml
             def self.included(base)
               base.class_eval do
+
+                setup :activate_authlogic
                 before(:each) do
-                  @users = mock_and_assign_collection(User)
+                  @users = assigns[:users] = (Array.new(3) {stub_user}).paginate
 
                   template.stub!(:new_object_url).and_return(new_polymorphic_path(User))
                 end
 
-                it "should render :partial => @users" do
-                  template.should_receive(:render).with(:partial => @users)
-                  do_render
+                it "should render" do
+                  render '/users/index'
                 end
 
-                it_should_link_to_new :user
+                it "should have more tests"
               end
             end
           end

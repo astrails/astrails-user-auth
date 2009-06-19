@@ -3,7 +3,7 @@ class AuthUpdateUsers < ActiveRecord::Migration
 <%
       existing_columns = ActiveRecord::Base.connection.columns(:users).collect { |each| each.name }
       columns = [
-        [:name,               "t.string   :name"],
+        [:name,               "t.string   :name, :limit => 48"],
         [:email,              "t.string   :email, :null => false, :limit => 100"],
         [:crypted_password,   "t.string   :crypted_password, :null => false, :limit => 128"],
         [:password_salt,      "t.string   :password_salt, :null => false, :limit => 20"],

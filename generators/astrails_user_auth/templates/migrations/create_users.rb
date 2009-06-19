@@ -1,7 +1,7 @@
 class AuthCreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-      t.string   :name
+      t.string   :name, :limit => 48
       t.string   :email, :null => false, :limit => 100
       t.string   :crypted_password, :null => false, :limit => 128
       t.string   :password_salt, :null => false, :limit => 20

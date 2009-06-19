@@ -8,7 +8,7 @@ module Astrails
               setup :activate_authlogic
 
               describe "when not logged in" do
-                [:index, :show, :edit, :update, :destroy].each do |action|
+                [:index, :show, :update, :destroy].each do |action|
                   describe_action(action) do
                     it_should_redirect_to("/login") {login_path}
                   end
@@ -58,24 +58,25 @@ module Astrails
                 stub_current_user
 
                 describe_action :index  do
-                  it_should_redirect_to("/") {"/"}
-                  it_should_match(:flash, :error, /admin/i)
+                  stubs_for_index(:user)
+                  it_should_render_template :index
+                  it "needs more tests"
                 end
 
                 describe_action :new do
-                  it_should_redirect_to("/") {"/"}
+                  it_should_redirect_to("/home") {"/home"}
                   it_should_match(:flash, :error, /logged out/i)
                 end
 
                 describe_action :create do
-                  it_should_redirect_to("/") {"/"}
+                  it_should_redirect_to("/home") {"/home"}
                   it_should_match(:flash, :error, /logged out/i)
                 end
 
                 describe "accessing other profile" do
-                  with_other_user
+                  with_other_user :param_name => :id
 
-                  [:show, :edit, :update, :destroy].each do |action|
+                  [:update, :destroy].each do |action|
                     describe_action(action) do
                       it_should_redirect_to("/") {"/"}
                       it_should_match(:flash, :error, /owner/i)
@@ -84,16 +85,10 @@ module Astrails
                 end
 
                 describe "assessing own profile" do
-                  with_current_user
+                  with_current_user :param_name => :id
 
                   describe_action(:show) do
                     it_should_render_template "show"
-                    it_should_find :user
-                    it_should_assign :user
-                  end
-
-                  describe_action(:edit) do
-                    it_should_render_template "edit"
                     it_should_find :user
                     it_should_assign :user
                   end
@@ -113,7 +108,8 @@ module Astrails
                       it_should_find :user
                       it_should_assign :user
                       it_should_update :user
-                      it_should_render_template "edit"
+                      it_should_render_template "show"
+                      it_should_match(:flash_now, :notice, /fail/i)
                     end
                   end
 
@@ -133,7 +129,7 @@ module Astrails
                     describe "when unsuccessfull" do
                       stubs_for_destroy(:user, false)
 
-                      it_should_match(:flash, :error, /fail/i)
+                      it_should_match(:flash, :notice, /fail/i)
                       it_should_redirect_to("/users") {users_path}
                     end
                   end

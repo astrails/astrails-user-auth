@@ -11,7 +11,7 @@ module Astrails
                 stub_current_user
                 [:new, :create, :edit, :update].each do |action|
                   describe_action(action) do
-                    it_should_redirect_to("/") {"/"}
+                    it_should_redirect_to("/home") {"/home"}
                   end
                 end
               end
@@ -73,7 +73,7 @@ module Astrails
 
                       it_should_find :user, :method => :find_using_perishable_token, :params => :id
                       it_should_update :user, [{"password" => "qweqwe", "password_confirmation" => "qweqwe"}]
-                      it_should_redirect_to("account_path") {account_path}
+                      it_should_redirect_to("profile_path") {profile_path}
                       it_should_match(:flash, :notice, /updated/i)
                     end
 

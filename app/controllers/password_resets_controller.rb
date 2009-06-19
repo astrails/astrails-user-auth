@@ -1,9 +1,11 @@
 class PasswordResetsController < ResourceController::Base
+  unloadable
 
   actions :update, :edit
 
   before_filter :require_no_user
   before_filter :load_user_using_perishable_token, :only => [:edit, :update]
+  layout "guest"
 
   # new.html.haml
 
@@ -22,7 +24,7 @@ class PasswordResetsController < ResourceController::Base
   # edit.html.haml
 
   update do
-    wants.html {redirect_to account_path}
+    wants.html {redirect_to profile_path}
     flash "Password successfully updated"
   end
 

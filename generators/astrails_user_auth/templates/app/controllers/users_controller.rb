@@ -1,4 +1,4 @@
-class UsersController < ResourceController::Base
+class UsersController < Astrails::ResourceController
   before_filter :require_admin, :only => :index
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_owner, :except => [:new, :create, :index]
