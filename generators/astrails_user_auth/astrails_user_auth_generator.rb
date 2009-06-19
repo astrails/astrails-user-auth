@@ -19,10 +19,8 @@ class AstrailsUserAuthGenerator < Rails::Generator::Base
 
       # models
       m.directory File.join("app", "models")
-      m.insert_or_create("app/models/user.rb", <<-RUBY)
-  acts_as_authentic
-  include Astrails::Auth::Model
-RUBY
+      m.file('app/models/user.rb', 'app/models/user.rb')
+      m.file('app/models/user_session.rb', 'app/models/user_session.rb')
 
       # views
       # copy all files in the templates app/views directory
