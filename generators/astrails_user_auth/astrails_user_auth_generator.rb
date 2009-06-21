@@ -9,7 +9,7 @@ class AstrailsUserAuthGenerator < Rails::Generator::Base
       m.file('app/controllers/users_controller.rb', 'app/controllers/users_controller.rb')
 
       # routes
-      m.route_resource ':account, :controller => "users"'
+      m.route_resource ':profile, :controller => "users"'
       m.route_resources ':users'
       m.route_name :signup, '"/signup", :controller => "users", :action => "new"'
 
