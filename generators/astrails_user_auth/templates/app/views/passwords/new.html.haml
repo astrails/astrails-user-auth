@@ -1,7 +1,7 @@
-%h1 Password Reset
+%h1= page_title "Password Reset / Account Activation"
 
 - semantic_form_for(@user, :url => passwords_path) do |f|
   != f.input :email
-  != f.submit password_reset_submit_label
+  != f.submit "Send Password Reset / Activation instructions"
 
 != link_to "login", login_path, :class => "login"
