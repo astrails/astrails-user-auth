@@ -1,36 +1,25 @@
-class UsersController < Astrails::ResourceController
-  before_filter :require_admin, :only => :index
+class UsersController < InheritedResources::Base
+  before_filter :require_admin, :only => [:index, :destroy]
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_owner, :except => [:new, :create, :index]
 
-  create do
-    before do
-      # make the first user admin
-      @user.is_admin = true if User.count.zero?
-      # TODO: activate here
-    end
+  def create
+    user = build_resource
+    user.is_admin = true if User.count.zero?
+    # TODO: activate here
+    create! {home_path(@user)}
   end
 
-  destroy do
-    after do
-      current_user_session.destroy
-    end
-    failure do
-      wants.html { redirect_to collection_url }
-      after {flash[:error] = "Failed to delete!"}
-    end
+  def destroy
+    destroy!
+    current_user_session.destroy
   end
 
   protected
 
-  def object
-    @object ||= param ? end_of_association_chain.find(param) : current_user
-    @object
-  end
-
   def require_owner
     return false unless require_user
-    return true unless object # let it fail
+    return true unless resource # let it fail
     return true if current_user.try(:is_admin?)
     return true if object == current_user # owner
 
@@ -39,4 +28,16 @@ class UsersController < Astrails::ResourceController
     return false
   end
 
+  def collection
+    @users ||= end_of_association_chain.paginate(params[:page]).all
+  end
+
+  def resource
+    @user ||= params[:id] ? User.find(params[:id]) : current_user
+  end
+
+  def build_resource
+    params[:user].try(:trust, :name)
+    super
+  end
 end

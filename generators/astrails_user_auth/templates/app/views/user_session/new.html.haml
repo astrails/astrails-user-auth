@@ -1,11 +1,8 @@
-- form_for(@user_session, :url => user_session_path) do |f|
-  != f.error_messages :message => nil
+- semantic_form_for(@user_session, :url => user_session_path) do |f|
+  != f.input :email
+  != f.input :password
+  != f.submit :login
 
-  != f.label :email
-  != f.text_field :email
+!= link_to "forgot_password", new_password_path, :class => "forgot_password"
 
-  != f.label :password
-  != f.text_field :password
-
-  != f.submit
-
+!= link_to "register", signup_path, :class => "register"

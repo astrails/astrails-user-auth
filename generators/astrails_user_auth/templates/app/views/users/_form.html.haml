@@ -1,12 +1,4 @@
-%div
-  %label{:for => "user_name"} Name:
-  != f.text_field :name
-%div
-  %label{:for => "user_email"} Email:
-  != f.text_field :email
-%div
-  %label{:for => "user_password"} Password:
-  != f.text_field :password
-%div
-  %label{:for => "user_password_confirmation"} Password Confirmation:
-  != f.text_field :password_confirmation
+!= f.input :name
+!= f.input :email
+!= f.input :password
+!= f.input :password_confirmation
