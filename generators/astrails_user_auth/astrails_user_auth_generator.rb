@@ -19,7 +19,12 @@ class AstrailsUserAuthGenerator < Rails::Generator::Base
 
       # models
       m.directory File.join("app", "models")
-      m.file('app/models/user.rb', 'app/models/user.rb')
+      m.insert_or_create("app/models/user.rb", <<-RUBY)
+  acts_as_authentic do
+    c.perishable_token_valid_for = 2.weeks
+  end
+  include Astrails::Auth::Model
+RUBY
       m.file('app/models/user_session.rb', 'app/models/user_session.rb')
 
       # views

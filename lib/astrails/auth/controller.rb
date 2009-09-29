@@ -4,7 +4,7 @@ module Astrails
       def self.included(base)
         base.class_eval do
           helper_method :current_user, :current_user_session, :when_current_user, :when_regular_other_user, :when_other_user, :when_admin
-          helper_method :when_current_user_or_admin, :when_logged_in
+          helper_method :when_current_user_or_admin, :when_logged_in, :when_not_logged_in, :same_user?
         end
       end
       def current_user_session
@@ -99,12 +99,20 @@ module Astrails
         yield if (@user != current_user) && !current_user_admin?
       end
 
+      def same_user?
+        current_user && @user == current_user
+      end
+
       def when_admin
         yield if current_user_admin?
       end
 
       def when_logged_in
         yield if logged_in?
+      end
+
+      def when_not_logged_in
+        yield unless logged_in?
       end
     end
   end

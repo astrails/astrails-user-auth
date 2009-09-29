@@ -1,6 +1,6 @@
-%h1 Password Reset
+%h1= @title
 
-- form_for(@user, :url => password_reset_path(@user.perishable_token), :method => :put) do |f|
+- form_for(@user, :url => password_path(@user.perishable_token), :method => :put) do |f|
   != f.error_messages
   != f.label :password
   != f.password_field :password

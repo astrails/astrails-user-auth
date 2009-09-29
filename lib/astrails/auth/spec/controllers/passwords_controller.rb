@@ -2,7 +2,7 @@ module Astrails
   module Auth
     module Spec
       module Controllers
-        module PasswordResetsController
+        module PasswordsController
           def self.included(base)
             base.class_eval do
               setup :activate_authlogic

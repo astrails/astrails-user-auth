@@ -2,7 +2,7 @@ module Astrails
   module Auth
     module Spec
       module Controllers
-        module PasswordResetsRouting
+        module PasswordsRouting
           def self.included(base)
             base.class_eval do
               describe "route generation" do

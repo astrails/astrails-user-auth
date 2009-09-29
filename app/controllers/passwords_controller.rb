@@ -1,9 +1,9 @@
-class PasswordResetsController < ResourceController::Base
+class PasswordController < InheritedResources::Base
   unloadable
 
   actions :update, :edit
 
-  before_filter :require_no_user
+  before_filter :require_no_user, :except => [:edit, :update]
   before_filter :load_user_using_perishable_token, :only => [:edit, :update]
   layout "guest"
 
@@ -13,7 +13,12 @@ class PasswordResetsController < ResourceController::Base
     @user = User.find_by_email(params[:email])
     if @user
       @user.deliver_password_reset_instructions!
-      flash[:notice] = "Instructions to reset your password have been emailed to you. Please check your email."
+      if @user.activated_at
+        # user is already active
+        flash[:notice] = "Instructions to reset your password have been emailed to you. Please check your email."
+      else
+        flash[:notice] = "Instructions to activate your account have been emailed to you. Please check your email."
+      end
       redirect_to root_url
     else
       flash[:error] = "No user was found with that email address"
@@ -21,7 +26,19 @@ class PasswordResetsController < ResourceController::Base
     end
   end
 
-  # edit.html.haml
+  def edit
+    if logged_in?
+      @title = "Change Password"
+      @submit_label = "Change"
+    elsif @user.active?
+      @title = "Password Reset"
+      @submit_label = "Reset"
+    else
+      @title = "Activate Account"
+      @submit_label = "Activate"
+    end
+    edit!
+  end
 
   update do
     wants.html {redirect_to profile_path}
@@ -30,10 +47,8 @@ class PasswordResetsController < ResourceController::Base
 
   private
 
-  def object_name; "user"; end
-
-  def object
-    @object ||= User.find_using_perishable_token(params[:id])
+  def resource
+    @user ||= params[:id] ? User.find_using_perishable_token(params[:id]) : current_user
   end
 
   def load_user_using_perishable_token
