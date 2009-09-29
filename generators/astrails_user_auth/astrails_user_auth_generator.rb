@@ -15,7 +15,7 @@ class AstrailsUserAuthGenerator < Rails::Generator::Base
 
       m.route_resource ':user_session, :controller => "user_session"'
       m.route_name :login, '"/login", :controller => "user_session", :action => "new"'
-      m.route_resources ':password_resets'
+      m.route_resources ':passwords'
 
       # models
       m.directory File.join("app", "models")
