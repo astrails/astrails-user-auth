@@ -1,9 +1,6 @@
-%h1= @title
+%h1= page_title password_form_title
 
-- form_for(@user, :url => password_path(@user.perishable_token), :method => :put) do |f|
-  != f.error_messages
-  != f.label :password
-  != f.password_field :password
-  != f.label :password_confirmation
-  != f.password_field :password_confirmation
-  != f.submit
+- semantic_form_for(@user, :url => password_path(@user.perishable_token), :method => :put) do |f|
+  != f.input :password
+  != f.input :password_confirmation
+  != f.submit password_submit_label

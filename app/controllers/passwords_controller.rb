@@ -7,10 +7,10 @@ class PasswordController < InheritedResources::Base
   before_filter :load_user_using_perishable_token, :only => [:edit, :update]
   layout "guest"
 
-  # new.html.haml
+  # new! + new.html.haml
 
   def create
-    @user = User.find_by_email(params[:email])
+    @user = User.find_by_email(params[:user][:email])
     if @user
       @user.deliver_password_reset_instructions!
       if @user.activated_at
@@ -26,23 +26,10 @@ class PasswordController < InheritedResources::Base
     end
   end
 
-  def edit
-    if logged_in?
-      @title = "Change Password"
-      @submit_label = "Change"
-    elsif @user.active?
-      @title = "Password Reset"
-      @submit_label = "Reset"
-    else
-      @title = "Activate Account"
-      @submit_label = "Activate"
-    end
-    edit!
-  end
+  #edit! + edit.html.haml
 
-  update do
-    wants.html {redirect_to profile_path}
-    flash "Password successfully updated"
+  def update
+    update! {profile_path}
   end
 
   private

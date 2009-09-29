@@ -1,8 +1,7 @@
 %h1 Password Reset
 
-- form_tag(passwords_path) do
-  != label_tag :email
-  != text_field_tag :email
-  != submit_tag
+- semantic_form_for(@user, :url => passwords_path) do |f|
+  != f.input :email
+  != f.submit password_reset_submit_label
 
 != link_to "login", login_path, :class => "login"
