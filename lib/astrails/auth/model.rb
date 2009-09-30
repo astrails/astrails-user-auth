@@ -1,9 +1,8 @@
 module Astrails
   module Auth
     module Model
-      def deliver_password_reset_instructions!
-        reset_perishable_token!
-        ::Astrails::Auth::Mailer.deliver_password_reset_instructions(self)
+      def has_no_credentials?
+        self.crypted_password.blank? # && self.openid_identifier.blank?
       end
 
       def active?

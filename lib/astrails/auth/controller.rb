@@ -3,7 +3,8 @@ module Astrails
     module Controller
       def self.included(base)
         base.class_eval do
-          helper_method :current_user, :current_user_session, :when_current_user, :when_regular_other_user, :when_other_user, :when_admin
+          helper_method :current_user, :current_user_session, :logged_in?
+          helper_method :when_current_user, :when_regular_other_user, :when_other_user, :when_admin
           helper_method :when_current_user_or_admin, :when_logged_in, :when_not_logged_in, :same_user?
         end
       end

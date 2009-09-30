@@ -7,59 +7,59 @@ module Astrails
             base.class_eval do
               describe "route generation" do
 
-                it "should map { :controller => 'password_resets', :action => 'index' } to /password_resets" do
-                  route_for(:controller => "password_resets", :action => "index").should == "/password_resets"
+                it "should map { :controller => 'passwords', :action => 'index' } to /passwords" do
+                  route_for(:controller => "passwords", :action => "index").should == "/passwords"
                 end
 
-                it "should map { :controller => 'password_resets', :action => 'new' } to /password_resets/new" do
-                  route_for(:controller => "password_resets", :action => "new").should == "/password_resets/new"
+                it "should map { :controller => 'passwords', :action => 'new' } to /passwords/new" do
+                  route_for(:controller => "passwords", :action => "new").should == "/passwords/new"
                 end
 
-                it "should map { :controller => 'password_resets', :action => 'show', :id => '1'} to /password_resets/1" do
-                  route_for(:controller => "password_resets", :action => "show", :id => "1").should == "/password_resets/1"
+                it "should map { :controller => 'passwords', :action => 'show', :id => '1'} to /passwords/1" do
+                  route_for(:controller => "passwords", :action => "show", :id => "1").should == "/passwords/1"
                 end
 
-                it "should map { :controller => 'password_resets', :action => 'edit', :id => '1' } to /password_resets/1/edit" do
-                  route_for(:controller => "password_resets", :action => "edit", :id => "1").should == "/password_resets/1/edit"
+                it "should map { :controller => 'passwords', :action => 'edit', :id => '1' } to /passwords/1/edit" do
+                  route_for(:controller => "passwords", :action => "edit", :id => "1").should == "/passwords/1/edit"
                 end
 
-                it "should map { :controller => 'password_resets', :action => 'update', :id => '1' } to /password_resets/1" do
-                  route_for(:controller => "password_resets", :action => "update", :id => "1").should == {:path => "/password_resets/1", :method => :put}
+                it "should map { :controller => 'passwords', :action => 'update', :id => '1' } to /passwords/1" do
+                  route_for(:controller => "passwords", :action => "update", :id => "1").should == {:path => "/passwords/1", :method => :put}
                 end
 
-                it "should map { :controller => 'password_resets', :action => 'destroy', :id => '1' } to /password_resets/1" do
-                  route_for(:controller => "password_resets", :action => "destroy", :id => "1").should == {:path => "/password_resets/1", :method => :delete}
+                it "should map { :controller => 'passwords', :action => 'destroy', :id => '1' } to /passwords/1" do
+                  route_for(:controller => "passwords", :action => "destroy", :id => "1").should == {:path => "/passwords/1", :method => :delete}
                 end
               end
 
               describe "route recognition" do
 
-                it "should generate params { :controller => 'password_resets', action => 'index' } from GET /password_resets" do
-                  params_from(:get, "/password_resets").should == {:controller => "password_resets", :action => "index"}
+                it "should generate params { :controller => 'passwords', action => 'index' } from GET /passwords" do
+                  params_from(:get, "/passwords").should == {:controller => "passwords", :action => "index"}
                 end
 
-                it "should generate params { :controller => 'password_resets', action => 'new' } from GET /password_resets/new" do
-                  params_from(:get, "/password_resets/new").should == {:controller => "password_resets", :action => "new"}
+                it "should generate params { :controller => 'passwords', action => 'new' } from GET /passwords/new" do
+                  params_from(:get, "/passwords/new").should == {:controller => "passwords", :action => "new"}
                 end
 
-                it "should generate params { :controller => 'password_resets', action => 'create' } from POST /password_resets" do
-                  params_from(:post, "/password_resets").should == {:controller => "password_resets", :action => "create"}
+                it "should generate params { :controller => 'passwords', action => 'create' } from POST /passwords" do
+                  params_from(:post, "/passwords").should == {:controller => "passwords", :action => "create"}
                 end
 
-                it "should generate params { :controller => 'password_resets', action => 'show', id => '1' } from GET /password_resets/1" do
-                  params_from(:get, "/password_resets/1").should == {:controller => "password_resets", :action => "show", :id => "1"}
+                it "should generate params { :controller => 'passwords', action => 'show', id => '1' } from GET /passwords/1" do
+                  params_from(:get, "/passwords/1").should == {:controller => "passwords", :action => "show", :id => "1"}
                 end
 
-                it "should generate params { :controller => 'password_resets', action => 'edit', id => '1' } from GET /password_resets/1;edit" do
-                  params_from(:get, "/password_resets/1/edit").should == {:controller => "password_resets", :action => "edit", :id => "1"}
+                it "should generate params { :controller => 'passwords', action => 'edit', id => '1' } from GET /passwords/1;edit" do
+                  params_from(:get, "/passwords/1/edit").should == {:controller => "passwords", :action => "edit", :id => "1"}
                 end
 
-                it "should generate params { :controller => 'password_resets', action => 'update', id => '1' } from PUT /password_resets/1" do
-                  params_from(:put, "/password_resets/1").should == {:controller => "password_resets", :action => "update", :id => "1"}
+                it "should generate params { :controller => 'passwords', action => 'update', id => '1' } from PUT /passwords/1" do
+                  params_from(:put, "/passwords/1").should == {:controller => "passwords", :action => "update", :id => "1"}
                 end
 
-                it "should generate params { :controller => 'password_resets', action => 'destroy', id => '1' } from DELETE /password_resets/1" do
-                  params_from(:delete, "/password_resets/1").should == {:controller => "password_resets", :action => "destroy", :id => "1"}
+                it "should generate params { :controller => 'passwords', action => 'destroy', id => '1' } from DELETE /passwords/1" do
+                  params_from(:delete, "/passwords/1").should == {:controller => "passwords", :action => "destroy", :id => "1"}
                 end
               end
             end

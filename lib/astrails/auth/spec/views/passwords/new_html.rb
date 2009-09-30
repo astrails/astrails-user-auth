@@ -7,7 +7,7 @@ module Astrails
             def self.included(base)
               base.class_eval do
                 it "should render new form" do
-                  render "/password_resets/new.html.haml"
+                  render "/passwords/new.html.haml"
 
                   response.should have_tag("form[action=?][method=post]", passwords_path) do
                   end

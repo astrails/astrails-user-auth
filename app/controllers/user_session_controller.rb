@@ -4,13 +4,13 @@ class UserSessionController < InheritedResources::Base
   before_filter :require_user, :only => :destroy
   defaults :singleton => true
 
-  create do
-    create! do |wants|
-      wants.html {redirect_back_or_default home_path}
+  def create
+    create! do |success, failure|
+      success.html {redirect_to home_path}
     end
   end
 
-  destroy do
+  def destroy
     destroy! do |watnts|
       wants.html {redirect_to login_path}
     end

@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe PasswordResetsController do
+describe PasswordsController do
   include Astrails::Auth::Spec::Controllers::PasswordResetsRouting
 end

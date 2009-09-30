@@ -3,8 +3,8 @@ class AuthCreateUsers < ActiveRecord::Migration
     create_table :users do |t|
       t.string   :name, :limit => 48
       t.string   :email, :null => false, :limit => 100
-      t.string   :crypted_password, :null => false, :limit => 128
-      t.string   :password_salt, :null => false, :limit => 20
+      t.string   :crypted_password, :null => true, :limit => 128
+      t.string   :password_salt, :null => true, :limit => 20
       t.string   :persistence_token, :limit => 128
       t.string   :single_access_token, :limit => 20
       t.string   :perishable_token, :limit =>  20
@@ -12,6 +12,7 @@ class AuthCreateUsers < ActiveRecord::Migration
       #t.datetime :last_request_at
       t.datetime :current_login_at
       t.datetime :last_login_at
+      t.datetime :activated_at
       t.string   :current_login_ip, :limit => 15
       t.string   :last_login_ip, :limit => 15
 

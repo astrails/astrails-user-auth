@@ -6,8 +6,13 @@ class UsersController < InheritedResources::Base
   def create
     user = build_resource
     user.is_admin = true if User.count.zero?
-    # TODO: activate here
-    create! {home_path(@user)}
+    if user.save_without_session_maintenance
+      user.deliver_activation_instructions!
+      flash[:notice] = "Your account has been created. Please check your e-mail for your account activation instructions!"
+      redirect_to profile_path
+    else
+      render :action => :new
+    end
   end
 
   def destroy
@@ -21,7 +26,7 @@ class UsersController < InheritedResources::Base
     return false unless require_user
     return true unless resource # let it fail
     return true if current_user.try(:is_admin?)
-    return true if object == current_user # owner
+    return true if resource == current_user # owner
 
     flash[:error] = "Only the owner can see this page"
     redirect_to "/"

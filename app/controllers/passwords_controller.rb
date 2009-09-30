@@ -1,11 +1,11 @@
-class PasswordController < InheritedResources::Base
+class PasswordsController < InheritedResources::Base
   unloadable
+  defaults :resource_class => User, :instance_name => :user
 
-  actions :update, :edit
+  actions :new, :update, :edit
 
   before_filter :require_no_user, :except => [:edit, :update]
   before_filter :load_user_using_perishable_token, :only => [:edit, :update]
-  layout "guest"
 
   # new! + new.html.haml
 
@@ -19,7 +19,7 @@ class PasswordController < InheritedResources::Base
       else
         flash[:notice] = "Instructions to activate your account have been emailed to you. Please check your email."
       end
-      redirect_to root_url
+      redirect_to login_path
     else
       flash[:error] = "No user was found with that email address"
       render :action => :new
@@ -29,24 +29,42 @@ class PasswordController < InheritedResources::Base
   #edit! + edit.html.haml
 
   def update
-    update! {profile_path}
+    unless resource.activated_at
+      resource.activated_at = Time.now
+      @activated = true
+    end
+
+    update! do |success, failure|
+      if resource.errors.empty?
+        @user.send(@acticated ? :deliver_activation_confirmation! : :deliver_password_reset_confirmation!)
+      else
+        resource.activated_at = nil if @activated # need to revert so that the password_edit_title will set right title
+      end
+
+      success.html {redirect_to profile_path}
+    end
+
   end
 
   private
+
+  def build_resource
+    @user ||= User.new
+  end
 
   def resource
     @user ||= params[:id] ? User.find_using_perishable_token(params[:id]) : current_user
   end
 
   def load_user_using_perishable_token
-    unless object
+    unless resource
       flash[:error] = <<-END
         We're sorry, but we could not locate your account.
         If you are having issues try copying and pasting the URL
         from your email into your browser or restarting the
         reset password process.
       END
-      redirect_to root_url
+      redirect_to login_path
     end
   end
 
