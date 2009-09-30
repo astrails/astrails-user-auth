@@ -2,7 +2,7 @@ module Astrails
   module Auth
     module Spec
       module Views
-        module PasswordResets
+        module Passwords
           module NewHtml
             def self.included(base)
               base.class_eval do
