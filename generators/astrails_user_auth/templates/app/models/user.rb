@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
     c.perishable_token_valid_for = 2.weeks
   end
   include Astrails::Auth::Model
+  attr_accessible :name, :password, :password_confirmation
 end

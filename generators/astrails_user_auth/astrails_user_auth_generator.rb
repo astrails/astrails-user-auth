@@ -5,7 +5,14 @@ class AstrailsUserAuthGenerator < Rails::Generator::Base
   def manifest
     record do |m|
       # controllers
-      m.insert_into "app/controllers/application_controller.rb", "include Astrails::Auth::Controller"
+      m.insert_into "app/controllers/application_controller.rb", <<-RUBY
+  include Astrails::Auth::Controller
+  def home_path
+    # this is where users is redirected after login
+    "/"
+  end
+  helper_method :home_path
+      RUBY
       m.file('app/controllers/users_controller.rb', 'app/controllers/users_controller.rb')
 
       # routes

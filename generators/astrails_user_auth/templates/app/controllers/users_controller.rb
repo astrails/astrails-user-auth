@@ -2,6 +2,7 @@ class UsersController < InheritedResources::Base
   before_filter :require_admin, :only => [:index, :destroy]
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_owner, :except => [:new, :create, :index]
+  before_filter :set_default_domain, :only => :create
 
   def create
     user = build_resource
@@ -42,7 +43,15 @@ class UsersController < InheritedResources::Base
   end
 
   def build_resource
-    params[:user].try(:trust, :name)
+    params[:user].try(:trust, :email)
     super
+  end
+
+  # this will set global preference :domain to the current domain
+  # when we create the first user.
+  def set_default_domain
+    if GlobalPreference.get(:domain).blank?
+      GlobalPreference.set!(:domain, request.host_with_port)
+    end
   end
 end
