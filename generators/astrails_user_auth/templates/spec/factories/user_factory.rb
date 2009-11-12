@@ -8,3 +8,7 @@ Factory.define :user do |user|
 
   user.skip_session_maintenance true
 end
+
+Factory.define :active_user, :parent => :user do |user|
+  user.activated_at 1.month.ago.utc
+end
