@@ -19,7 +19,7 @@ class PasswordsController < InheritedResources::Base
       else
         flash[:notice] = "Instructions to activate your account have been emailed to you. Please check your email."
       end
-      redirect_to login_path
+      redirect_to "/"
     else
       flash[:error] = "No user was found with that email address"
       render :action => :new
