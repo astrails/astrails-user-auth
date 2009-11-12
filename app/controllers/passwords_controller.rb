@@ -64,7 +64,7 @@ class PasswordsController < InheritedResources::Base
         from your email into your browser or restarting the
         reset password process.
       END
-      redirect_to login_path
+      redirect_to new_password_path
     end
   end
 
