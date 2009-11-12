@@ -4,6 +4,12 @@ describe PasswordsController do
   setup :activate_authlogic
   before(:each) {@param = @factory = :user}
 
+  describe :routing do
+    it_should_not_route :index
+    it_should_not_route :show
+    it_should_not_route :destroy
+  end
+
   describe "(guest)" do
     describe_action(:new) { it_should_render_template "new" }
 
@@ -33,6 +39,7 @@ describe PasswordsController do
         it "should find user" do
           User.should_receive(:find_by_email).with(@user.email).and_return(@user)
           eval_request
+          assigns[:user].should == @user
         end
 
         it "should call deliver_password_reset_instructions!" do
@@ -76,9 +83,10 @@ describe PasswordsController do
             @params[:user] = {:password => "qweqwe", :password_confirmation => "asdasd"}
           end
 
-          it "should_find user" do
+          it "should find user" do
             User.should_receive(:find_using_perishable_token).with("some-token").and_return(@user)
             eval_request
+            assigns[:user].should == @user
           end
           it_should_render_template "edit"
         end
@@ -119,12 +127,47 @@ describe PasswordsController do
   end
 
   describe "(user)" do
-  #   stub_current_user
-  #   [:new, :create, :edit, :update].each do |action|
-  #     describe_action(action) do
-  #       it_should_redirect_to("/home") {"/home"}
-  #     end
-  #   end
+    before(:each) do
+      UserSession.create!(@user = Factory.build(:active_user))
+      @params = {}
+    end
+
+    [:new, :create].each do |action|
+      describe_action(action) do
+        it_should_redirect_to("/")
+      end
+    end
+
+    describe_action(:edit) do
+      it "should call current_user" do
+        controller.should_receive(:current_user).and_return(@user)
+        eval_request
+      end
+
+      it "should use current_user" do
+        eval_request
+        assigns[:user].should == @user
+      end
+
+    end
+
+    describe_action(:update) do
+      before(:each) do
+        @params[:user] = {:password => "asdasd", :password_confirmation => "asdasd"}
+        User.any_instance.stubs(:deliver_password_reset_confirmation!)
+      end
+
+      it "should call current_user" do
+        controller.should_receive(:current_user).and_return(@user)
+        eval_request
+      end
+
+      it "should use current_user" do
+        eval_request
+        assigns[:user].should == @user
+      end
+
+    end
   end
 
 end
