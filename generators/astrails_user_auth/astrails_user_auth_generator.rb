@@ -59,7 +59,7 @@ RUBY
         file = file[m.target.source_root.length+1..-1]
         dir = File.dirname(file)
         m.directory(dir) unless File.directory?(dir)
-        m.insert_or_create(file, file)
+        m.template(file, file)
       end
 
       # factory
