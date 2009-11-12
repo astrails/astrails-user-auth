@@ -1,5 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + "/lib/insert_commands.rb")
 require File.expand_path(File.dirname(__FILE__) + "/lib/rake_commands.rb")
+require 'ruby-debug'
 
 class AstrailsUserAuthGenerator < Rails::Generator::Base
   def manifest
@@ -55,11 +56,11 @@ RUBY
 
       # specs
       Dir[m.target.source_root+"/spec/**/*.*"].each do |file|
-        incl = File.read(file).grep(/include/).first.chomp
         file = file[m.target.source_root.length+1..-1]
-        m.directory File.dirname(file)
-        m.insert_or_create(file, incl)
+        m.insert_or_create(file, file)
       end
+
+      # factory
       m.template "spec/factories/user_factory.rb", "spec/factories/user_factory.rb"
     end
   end
