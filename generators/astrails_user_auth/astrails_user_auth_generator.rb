@@ -60,6 +60,7 @@ RUBY
         m.directory File.dirname(file)
         m.insert_or_create(file, incl)
       end
+      m.template "spec/factories/user_factory.rb", "spec/factories/user_factory.rb"
     end
   end
   private
