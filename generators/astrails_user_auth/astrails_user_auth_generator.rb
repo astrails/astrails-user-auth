@@ -57,6 +57,8 @@ RUBY
       # specs
       Dir[m.target.source_root+"/spec/**/*.*"].each do |file|
         file = file[m.target.source_root.length+1..-1]
+        dir = File.dirname(file)
+        m.directory(dir) unless File.directory?(dir)
         m.insert_or_create(file, file)
       end
 
