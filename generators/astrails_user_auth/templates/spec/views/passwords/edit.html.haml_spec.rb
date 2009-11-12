@@ -1,8 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/passwords/edit.html.haml" do
+  setup :activate_authlogic
   before do
-    @user = assigns[:user] = stub_user
+    @user = assigns[:user] = Factory.create(:user)
   end
 
   it "should render edit form" do

@@ -1,15 +1,13 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/users/_user.html.haml" do
+  setup :activate_authlogic
   before(:each) do
-    @user = mock_and_assign(User, :stub => {
-      :name => "foo",
-      :email => "foo",
-      :password => "foo"
-    })
+    @factory = :user
+    @user = assigns[:user] = Factory.create(:user)
     template.stub!(:user).and_return(@user)
   end
 
-  it_should_link_to_show :user
-  it_should_link_to_delete :user
+  it "should_link_to_show"
+  it "should_link_to_delete"
 end
