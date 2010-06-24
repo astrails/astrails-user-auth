@@ -22,6 +22,7 @@ class PasswordsController < InheritedResources::Base
       redirect_to "/"
     else
       flash[:error] = "No user was found with that email address"
+      @user = User.new
       render :action => :new
     end
   end
